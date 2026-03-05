@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Room</title>
+    <style>
+        body { background: #0f172a; color: white; font-family: sans-serif; text-align: center; }
+        .board { display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; margin: 50px auto; width: 320px; }
+        .cell { width: 100px; height: 100px; background: #1e293b; border: 2px solid #334155; border-radius: 10px; font-size: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .cell:hover { background: #334155; }
+        #msg { font-size: 1.5rem; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <div id="msg">Your turn, Player X</div>
+    <div class="board" id="game-board">
+        <div class="cell" onclick="play(0)"></div>
+        <div class="cell" onclick="play(1)"></div>
+        <div class="cell" onclick="play(2)"></div>
+        <div class="cell" onclick="play(3)"></div>
+        <div class="cell" onclick="play(4)"></div>
+        <div class="cell" onclick="play(5)"></div>
+        <div class="cell" onclick="play(6)"></div>
+        <div class="cell" onclick="play(7)"></div>
+        <div class="cell" onclick="play(8)"></div>
+    </div>
+    <button onclick="location.reload()" style="padding:10px 20px; border-radius:5px; cursor:pointer;">Restart</button>
+
+    <script>
+        let turn = "X", game = ["","","","","","","","",""], active = true;
+        function play(i) {
+            if (game[i] || !active) return;
+            game[i] = turn;
+            event.target.innerText = turn;
+            if (checkWin()) {
+                document.getElementById('msg').innerText = turn + " Wins! 🏆";
+                active = false;
+            } else {
+                turn = turn === "X" ? "O" : "X";
+                document.getElementById('msg').innerText = "Player " + turn + "'s turn";
+            }
+        }
+        function checkWin() {
+            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return wins.some(c => game[c[0]] && game[c[0]] === game[c[1]] && game[c[0]] === game[c[2]]);
+        }
+    </script>
+</body>
+</html>
